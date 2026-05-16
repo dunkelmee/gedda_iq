@@ -1,8 +1,9 @@
 'use client';
 // trigger build
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { connectSocket } from '@/lib/socket';
+import AvatarDisplay from '@/components/AvatarDisplay';
 
 const AVATARS = ['⚡', '🔥', '🎮', '🦁', '🐺', '🦊', '🐉', '🎯', '💎', '🌟', '🦅', '🐯'];
 
@@ -12,6 +13,30 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 96;
+        canvas.height = 96;
+        const ctx = canvas.getContext('2d')!;
+        const size = Math.min(img.width, img.height);
+        const sx = (img.width - size) / 2;
+        const sy = (img.height - size) / 2;
+        ctx.drawImage(img, sx, sy, size, size, 0, 0, 96, 96);
+        setAvatar(canvas.toDataURL('image/jpeg', 0.85));
+      };
+      img.src = evt.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
 
   useEffect(() => {
     try {
@@ -65,7 +90,7 @@ export default function LoginPage() {
         <div className="relative mb-7">
           <div className="w-24 h-24 rounded-full bg-purple-900/40 border border-purple-500/40
                           flex items-center justify-center glow-ring">
-            <span className="text-5xl">{avatar}</span>
+            <AvatarDisplay avatar={avatar} emojiClass="text-5xl" />
           </div>
           <div className="absolute inset-0 rounded-full bg-purple-500/10 blur-xl -z-10" />
         </div>
@@ -112,6 +137,24 @@ export default function LoginPage() {
             <span className="text-xs text-slate-600">Swipe to browse</span>
           </div>
           <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none">
+            {/* Upload slot */}
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={loading}
+              className={`shrink-0 w-16 h-16 rounded-full border-2 overflow-hidden
+                          flex items-center justify-center transition-all duration-150
+                          ${avatar.startsWith('data:')
+                            ? 'border-purple-500 glow-ring p-0'
+                            : 'border-dashed border-arena-border bg-arena-surface hover:border-purple-500/50'
+                          }`}
+            >
+              {avatar.startsWith('data:') ? (
+                <img src={avatar} alt="" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-xl">📷</span>
+              )}
+            </button>
+
             {AVATARS.map((a) => (
               <button
                 key={a}
@@ -128,6 +171,13 @@ export default function LoginPage() {
               </button>
             ))}
           </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleImageUpload}
+          />
         </div>
 
         {/* CTA */}

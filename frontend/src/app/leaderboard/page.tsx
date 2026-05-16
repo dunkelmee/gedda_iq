@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import type { LeaderboardEntry } from '@/lib/api';
+import AvatarDisplay from '@/components/AvatarDisplay';
 
 const AVATAR_BG = [
   'bg-purple-900/70',
@@ -115,7 +116,7 @@ export default function LeaderboardPage() {
                   {/* Avatar */}
                   <div className={`w-10 h-10 rounded-full ${avatarBg(entry.nickname)} shrink-0
                                   border border-purple-500/30 flex items-center justify-center text-lg`}>
-                    {entry.avatar}
+                    <AvatarDisplay avatar={entry.avatar} />
                   </div>
 
                   {/* Name + stats */}

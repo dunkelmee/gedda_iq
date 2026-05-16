@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { connectSocket, getSocket } from '@/lib/socket';
 import type { LobbyPlayer, MatchData, StoredPlayer } from '@/lib/types';
+import AvatarDisplay from '@/components/AvatarDisplay';
 
 interface IncomingChallenge {
   challengeId: string;
@@ -232,7 +233,7 @@ export default function LobbyPage() {
       <header className="flex items-center gap-3 px-5 pt-5 pb-4">
         <div className={`w-9 h-9 rounded-full shrink-0 border border-purple-500/40 flex items-center justify-center text-lg
                         ${mePlayer ? avatarBg(mePlayer.socketId) : 'bg-purple-900/40'}`}>
-          {mePlayer?.avatar ?? '👤'}
+          <AvatarDisplay avatar={mePlayer?.avatar ?? '👤'} />
         </div>
         <div className="flex-1">
           <p className="text-xs font-black tracking-[0.2em] uppercase text-white leading-none">IQ Arena</p>
@@ -402,7 +403,7 @@ function PlayerRow({
       <div className="relative shrink-0">
         <div className={`w-11 h-11 rounded-full ${bgClass} border border-purple-500/30
                         flex items-center justify-center text-xl`}>
-          {player.avatar}
+          <AvatarDisplay avatar={player.avatar} />
         </div>
         {!player.inMatch && (
           <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-arena-card" />
@@ -472,7 +473,7 @@ function ChallengeModal({
       <div className="card p-8 max-w-xs w-full text-center animate-fade-in glow-ring">
         <div className="w-16 h-16 rounded-full bg-purple-900/50 border border-purple-500/40
                         flex items-center justify-center text-3xl mx-auto mb-4">
-          {challenger.avatar}
+          <AvatarDisplay avatar={challenger.avatar} />
         </div>
         <h2 className="text-xl font-black text-white mb-1">Challenge!</h2>
         <p className="text-slate-300 text-sm mb-1">
@@ -533,7 +534,7 @@ function ChatPanel({
       <div className="flex items-center gap-3 px-4 py-3 border-b border-arena-border shrink-0">
         <div className="w-9 h-9 rounded-full bg-purple-900/50 border border-purple-500/30
                         flex items-center justify-center text-lg">
-          {player.avatar}
+          <AvatarDisplay avatar={player.avatar} />
         </div>
         <div className="flex-1 min-w-0">
           <p className="font-bold text-white text-sm truncate">{player.nickname}</p>

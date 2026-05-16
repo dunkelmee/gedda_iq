@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { getSocket } from '@/lib/socket';
 import type { MatchData, MatchResult, Question } from '@/lib/types';
+import AvatarDisplay from '@/components/AvatarDisplay';
 
 type Phase = 'loading' | 'countdown' | 'playing' | 'finished' | 'results';
 
@@ -227,7 +228,7 @@ export default function MatchPage() {
         <div className="card px-6 py-4 flex items-center gap-4 w-full">
           <div className="w-12 h-12 rounded-full bg-purple-900/50 border border-purple-500/30
                           flex items-center justify-center text-2xl shrink-0">
-            {matchData.opponent.avatar}
+            <AvatarDisplay avatar={matchData.opponent.avatar} />
           </div>
           <div>
             <p className="text-xs text-slate-400 uppercase tracking-wider">Your Opponent</p>
@@ -254,7 +255,7 @@ export default function MatchPage() {
       <header className="flex items-center gap-3 pt-5 pb-3">
         <div className="w-8 h-8 rounded-full bg-purple-900/50 border border-purple-500/30
                         flex items-center justify-center text-base shrink-0">
-          {myAvatar}
+          <AvatarDisplay avatar={myAvatar} />
         </div>
         <p className="flex-1 text-xs font-black tracking-[0.2em] uppercase text-white">IQ Arena</p>
         <button className="text-slate-500 hover:text-slate-300 transition-colors">⚙</button>
@@ -425,7 +426,7 @@ function ResultsScreen({
       <header className="flex items-center gap-3 pt-5 pb-3">
         <div className="w-8 h-8 rounded-full bg-purple-900/50 border border-purple-500/30
                         flex items-center justify-center text-base shrink-0">
-          {myAvatar}
+          <AvatarDisplay avatar={myAvatar} />
         </div>
         <p className="flex-1 text-xs font-black tracking-[0.2em] uppercase text-white">IQ Arena</p>
         <button className="text-slate-500 hover:text-slate-300 transition-colors">⚙</button>
