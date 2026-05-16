@@ -157,7 +157,7 @@ export default function LeaderboardPage() {
           {([
             { icon: '🏟️', label: 'Lobby',       path: '/lobby' },
             { icon: '🏆', label: 'Leaderboard', path: '/leaderboard' },
-            { icon: '🎯', label: 'Training',    path: null },
+            { icon: '🎯', label: 'Training',    path: '/training' },
             { icon: '👥', label: 'Social',      path: null },
           ] as { icon: string; label: string; path: string | null }[]).map(({ icon, label, path: dest }) => (
             <button

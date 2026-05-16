@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import AvatarDisplay from '@/components/AvatarDisplay';
 
 // ── Question generation (client-side port of gameEngine.js) ──────────────────
 
@@ -179,7 +180,7 @@ export default function TrainingPage() {
         <header className="flex items-center gap-3 pt-5 pb-3">
           <div className="w-8 h-8 rounded-full bg-purple-900/50 border border-purple-500/30
                           flex items-center justify-center text-base shrink-0">
-            {myAvatar}
+            <AvatarDisplay avatar={myAvatar} />
           </div>
           <p className="flex-1 text-xs font-black tracking-[0.2em] uppercase text-white">IQ Arena</p>
         </header>
@@ -262,7 +263,7 @@ export default function TrainingPage() {
       <header className="flex items-center gap-3 pt-5 pb-3">
         <div className="w-8 h-8 rounded-full bg-purple-900/50 border border-purple-500/30
                         flex items-center justify-center text-base shrink-0">
-          {myAvatar}
+          <AvatarDisplay avatar={myAvatar} />
         </div>
         <p className="flex-1 text-xs font-black tracking-[0.2em] uppercase text-white">Training</p>
         <button
