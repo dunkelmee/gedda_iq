@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# Env files (contain secrets)
+.env
+.env.local
+backend/.env
+
+# Build output
+frontend/tsconfig.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,34 @@
+// Optional persistent storage — core game runs in-memory.
+// Run: npx prisma migrate dev  (requires DATABASE_URL in .env)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id        String   @id @default(cuid())
+  nickname  String
+  avatar    String
+  createdAt DateTime @default(now())
+  matchesAs1 Match[] @relation("Player1")
+  matchesAs2 Match[] @relation("Player2")
+}
+
+model Match {
+  id        String   @id @default(cuid())
+  player1   Player   @relation("Player1", fields: [player1Id], references: [id])
+  player1Id String
+  player2   Player   @relation("Player2", fields: [player2Id], references: [id])
+  player2Id String
+  winnerId  String?
+  p1Score   Int
+  p2Score   Int
+  p1Correct Int
+  p2Correct Int
+  createdAt DateTime @default(now())
+}

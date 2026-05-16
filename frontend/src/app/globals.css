@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    @apply bg-arena-bg text-white antialiased;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background-image:
+      linear-gradient(rgba(168, 85, 247, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(168, 85, 247, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #08081a; }
+  ::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 3px; }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-purple-400 to-violet-300 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-victory {
+    @apply bg-gradient-to-r from-purple-400 via-fuchsia-300 to-violet-300 bg-clip-text text-transparent;
+  }
+
+  .card {
+    @apply bg-arena-card border border-arena-border rounded-2xl;
+  }
+
+  .btn-primary {
+    @apply bg-purple-600 hover:bg-purple-500 active:bg-purple-700
+           text-white font-bold rounded-xl px-6 py-4
+           transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-outline {
+    @apply border border-purple-500/60 hover:border-purple-400
+           text-purple-300 hover:text-purple-200 font-bold rounded-xl px-6 py-4
+           transition-all duration-150 bg-transparent;
+  }
+
+  .glow-ring {
+    box-shadow: 0 0 0 2px #a855f7, 0 0 24px #a855f740;
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 0 1px #22d3ee40, 0 0 16px #22d3ee20;
+  }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}

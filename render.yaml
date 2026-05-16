@@ -1,0 +1,41 @@
+services:
+
+  # ── Backend ──────────────────────────────────────────────────────────────────
+  - type: web
+    name: gedda-iq-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install --omit=dev
+    startCommand: node src/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Set this to your frontend Render URL after the first deploy,
+      # e.g. https://gedda-iq-frontend.onrender.com
+      - key: FRONTEND_URL
+        sync: false
+
+  # ── Frontend ─────────────────────────────────────────────────────────────────
+  - type: web
+    name: gedda-iq-frontend
+    runtime: node
+    rootDir: frontend
+    # Build, then wire standalone output so `node server.js` works out of the box
+    buildCommand: >
+      npm install &&
+      npm run build &&
+      cp -r .next/static .next/standalone/.next/static &&
+      cp -r public .next/standalone/public
+    startCommand: node .next/standalone/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+      - key: HOSTNAME
+        value: "0.0.0.0"
+      # Set this to your backend Render URL before the first deploy,
+      # e.g. https://gedda-iq-backend.onrender.com
+      # This is baked into the JS bundle at build time.
+      - key: NEXT_PUBLIC_BACKEND_URL
+        sync: false
